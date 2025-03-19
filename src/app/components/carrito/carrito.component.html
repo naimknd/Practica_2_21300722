@@ -1,0 +1,44 @@
+<div class="container">
+  <h1 class="main-title">Carrito de Compras</h1>
+
+  <div *ngIf="!hayProductos()" class="carrito-vacio">
+    <p>Tu carrito está vacío</p>
+    <button (click)="volverAProductos()" class="btn btn-primary">Ver Productos</button>
+  </div>
+
+  <div *ngIf="hayProductos()" class="carrito-contenido">
+    <div class="productos-carrito">
+      <div *ngFor="let producto of carrito; let i = index" class="producto-carrito">
+        <img [src]="producto.imagen" alt="{{producto.nombre}}" class="imagen-mini">
+        <div class="detalles">
+          <h3>{{producto.nombre}}</h3>
+          <p>Precio: ${{producto.precio}}</p>
+          <p>Cantidad: {{producto.cantidad}}</p>
+          <p>Subtotal: ${{producto.precio * producto.cantidad!}}</p>
+        </div>
+        <button (click)="eliminarProducto(i)" class="btn-eliminar">Eliminar</button>
+      </div>
+    </div>
+
+    <div class="resumen">
+      <h2>Resumen de compra</h2>
+      <p>Subtotal: ${{total}}</p>
+      <p>IVA (16%): ${{iva}}</p>
+      <p class="total">Total: ${{totalConIVA}}</p>
+
+      <div class="acciones">
+        <button (click)="generarRecibo()" class="btn btn-success">Generar Recibo</button>
+        <button (click)="vaciarCarrito()" class="btn btn-danger">Vaciar Carrito</button>
+        <button (click)="volverAProductos()" class="btn btn-secondary">Seguir Comprando</button>
+      </div>
+    </div>
+
+    <div *ngIf="reciboGenerado" class="recibo">
+      <h2>Recibo Generado</h2>
+      <div class="xml-content">
+        <pre>{{receiptContent}}</pre>
+      </div>
+      <button (click)="descargarRecibo()" class="btn btn-primary">Descargar XML</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="header">
+    <h1 class="main-title">Catalogo de productos</h1>
+    <div class="nav-buttons">
+      <button (click)="irAlCarrito()" class="btn btn-carrito">Ver Carrito</button>
+      <button (click)="irAlInventario()" class="btn btn-inventario">Administrar Inventario</button>
+    </div>
+  </div>
+  
+  <div *ngIf="mensajeExito" class="mensaje-exito">
+    {{ mensajeExito }}
+  </div>
+  
+  <div *ngIf="mensajeError" class="mensaje-error">
+    {{ mensajeError }}
+  </div>
+  
+  <div class="productos">
+    <div *ngFor="let producto of productos" class="producto">
+      <img [src]="producto.imagen" alt="{{producto.nombre}}" class="imagen-producto">
+      <h3>{{producto.nombre}}</h3>
+      <p class="precio">Precio: ${{producto.precio}}</p>
+      <p class="stock" [class.stock-bajo]="producto.stock <= 5" [class.agotado]="producto.stock <= 0">
+        {{ producto.stock === 0 ? 'Agotado' : 
+           producto.stock === 1 ? '¡Última unidad!' :
+           producto.stock <= 5 ? '¡Últimas ' + producto.stock + ' unidades!' : 
+           'Disponibles: ' + producto.stock }}
+      </p>
+      <button (click)="agregarAlCarrito(producto)" 
+              [disabled]="producto.stock <= 0"
+              [class.disabled]="producto.stock <= 0"
+              class="btn-agregar">
+        {{producto.stock > 0 ? 'Agregar al carrito' : 'Agotado'}}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<productos>
+    <producto>
+        <id>1</id>
+        <nombre>Adidas Superstar XLG</nombre>
+        <precio>2599.99</precio>
+        <imagen>assets/adidas_superstar_xlg.jpg</imagen>
+        <stock>4</stock>
+    </producto>
+    <producto>
+        <id>2</id>
+        <nombre>Reebok Club C</nombre>
+        <precio>1999.99</precio>
+        <imagen>assets/reebok_club_c.jpg</imagen>
+        <stock>2</stock>
+    </producto>
+    <producto>
+        <id>3</id>
+        <nombre>Asics 1130</nombre>
+        <precio>2299.99</precio>
+        <imagen>assets/asics_1130.jpg</imagen>
+        <stock>1</stock>
+    </producto>
+    <producto>
+        <id>5</id>
+        <nombre>Nuevo Producto</nombre>
+        <precio>850</precio>
+        <imagen>assets/producto.jpg</imagen>
+        <stock>10</stock>
+    </producto>
+</productos>

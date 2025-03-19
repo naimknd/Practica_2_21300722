@@ -1,0 +1,106 @@
+<div class="container">
+  <h1 class="main-title">Gestión de Catálogo de Productos</h1>
+  
+  <!-- Mensajes de éxito y error -->
+  <div *ngIf="mensajeExito" class="alert alert-success">{{ mensajeExito }}</div>
+  <div *ngIf="mensajeError" class="alert alert-danger">{{ mensajeError }}</div>
+  
+  <div class="page-container">
+    <!-- Columna izquierda: Tabla de productos -->
+    <div class="product-list-column">
+      <div class="panel panel-tabla">
+        <h2>Catálogo de Productos</h2>
+        <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of inventario">
+                <td>{{ item.id }}</td>
+                <td>{{ item.nombre }}</td>
+                <td>${{ item.precio.toFixed(2) }}</td>
+                <td>{{ item.stock }}</td>
+                <td>
+                  <button (click)="editarItem(item)" class="btn btn-sm btn-warning">Editar</button>
+                  <button (click)="eliminarItem(item.id)" class="btn btn-sm btn-danger">Eliminar</button>
+                </td>
+              </tr>
+              <tr *ngIf="inventario.length === 0">
+                <td colspan="5" class="text-center">No hay productos en el catálogo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <!-- Botón para volver a productos -->
+      <button class="btn btn-primary btn-volver mt-3" (click)="irAProductos()">Volver a Productos</button>
+    </div>
+    
+    <!-- Columna derecha: Formularios -->
+    <div class="product-form-column">
+      <!-- Panel de agregar/editar producto -->
+      <div class="panel">
+        <h2>{{ modoEdicion ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h2>
+        <div class="form-group">
+          <label for="nombre">Nombre *</label>
+          <input type="text" id="nombre" class="form-control" 
+                 [ngModel]="getFormValue('nombre')" 
+                 (ngModelChange)="setFormValue('nombre', $event)" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="precio">Precio *</label>
+          <input type="number" id="precio" class="form-control" 
+                 [ngModel]="getFormValue('precio')" 
+                 (ngModelChange)="setFormValue('precio', $event)" min="0" step="0.01" required>
+        </div>
+
+        <div class="form-group">
+          <label for="stock">Stock disponible *</label>
+          <input type="number" id="stock" class="form-control" 
+                 [ngModel]="getFormValue('stock')" 
+                 (ngModelChange)="setFormValue('stock', $event)" min="0" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="imagen">Ruta de Imagen *</label>
+          <input type="text" id="imagen" class="form-control" 
+                 [ngModel]="getFormValue('imagen')" 
+                 (ngModelChange)="setFormValue('imagen', $event)" required>
+          <small class="help-text">Ejemplo: assets/producto.jpg</small>
+        </div>
+        
+        <div class="actions">
+          <button *ngIf="!modoEdicion" (click)="agregarItem()" class="btn btn-primary">Agregar Producto</button>
+          <button *ngIf="modoEdicion" (click)="actualizarItem()" class="btn btn-success">Guardar</button>
+          <button *ngIf="modoEdicion" (click)="cancelarEdicion()" class="btn btn-secondary">Cancelar</button>
+        </div>
+      </div>
+      
+      <!-- Panel de importación y exportación -->
+      <div class="panel">
+        <h2>Importar/Exportar XML</h2>
+        <div class="form-group">
+          <label for="xmlFile">Archivo XML</label>
+          <input type="file" id="xmlFile" class="form-control" accept=".xml" (change)="seleccionarArchivo($event)">
+        </div>
+        <div class="actions">
+          <button (click)="importarXML()" class="btn btn-info" [disabled]="!archivoXML">Importar</button>
+          <button (click)="exportarXML()" class="btn btn-primary" [disabled]="inventario.length === 0">Exportar</button>
+          <button (click)="resetearInventario()" class="btn btn-warning">Restablecer</button>
+        </div>
+        <div class="note">
+          <strong>Nota:</strong> Para actualizar el catálogo visible, reemplace productos.xml en public/assets.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
