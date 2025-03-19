@@ -15,6 +15,7 @@
             <thead>
               <tr>
                 <th>ID</th>
+                <th>Imagen</th>
                 <th>Nombre</th>
                 <th>Precio</th>
                 <th>Stock</th>
@@ -24,6 +25,7 @@
             <tbody>
               <tr *ngFor="let item of inventario">
                 <td>{{ item.id }}</td>
+                <td><img [src]="item.imagen" alt="{{ item.nombre }}" class="thumbnail-img"></td>
                 <td>{{ item.nombre }}</td>
                 <td>${{ item.precio.toFixed(2) }}</td>
                 <td>{{ item.stock }}</td>
@@ -33,7 +35,7 @@
                 </td>
               </tr>
               <tr *ngIf="inventario.length === 0">
-                <td colspan="5" class="text-center">No hay productos en el catálogo</td>
+                <td colspan="6" class="text-center">No hay productos en el catálogo</td>
               </tr>
             </tbody>
           </table>
